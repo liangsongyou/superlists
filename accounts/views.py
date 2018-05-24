@@ -4,6 +4,7 @@ from django.contrib import messages, auth
 from django.core.urlresolvers import reverse
 
 from accounts.models import Token
+from superlists.settings import EMAIL_HOST_USER
 
 import sys
 
@@ -15,10 +16,11 @@ def send_login_email(request):
         reverse('login') + '?token=' + str(token.uid)
     )
     message_body = f'Use this link to log in:\n\n{url}'
+    print(email)
     send_mail(
         'Your login link for Superlists',
         message_body,
-        'noreply@superlists',
+        EMAIL_HOST_USER,
         [email]
     )
     messages.success(
