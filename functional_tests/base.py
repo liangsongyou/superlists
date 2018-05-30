@@ -20,7 +20,7 @@ SCREEN_DUMP_LOCATION = os.path.join(
 
 
 
-MAX_WAIT = 10
+MAX_WAIT = 20
 
 def wait(fn):
     def modified_fn(*args,**kwargs):
