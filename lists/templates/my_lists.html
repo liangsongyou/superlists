@@ -9,10 +9,23 @@
 {% endblock list_form %}
 
 {% block extra_content %}
-    <h2>{{ owner.email }}'s lists</h2>
-    <ul>
-        {% for list in owner.list_set.all  %}
-            <li><a href="{{ list.get_absolute_url }}">{{ list.name }}</a></li>
-        {% endfor %}
-    </ul>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>{{ owner.email }}'s lists</h4>
+            <ul>
+                {% for list in owner.list_set.all  %}
+                    <li><a href="{{ list.get_absolute_url }}">{{ list.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h4>Lists shared by othe users:</h4>
+            {% for list in owner.shared_lists.all  %}
+                <li>
+                    <a href="{{ list.get_absolute_url }}">{{ list.name }}</a>
+                    ({{ list.owner.email }})
+                </li>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock extra_content %}

@@ -1,10 +1,35 @@
 {% extends "base.html" %}
+
 {% block header_text %}Your To-Do list{% endblock header_text %}
+
 {% block form_action %}{% url 'view_list' list.id %}{% endblock form_action %}
+
 {% block table %}
   <table id="id_list_table" class="table">
     {% for item in list.item_set.all  %}
       <tr><td>{{ forloop.counter }}: {{item.text}}</td></tr>
     {% endfor %}
   </table>
+  
 {% endblock table %}
+
+{% block extra_content %}
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Shared with</h5>
+            <ul>
+                {% for sharee in list.shared_with.all %}
+                    <li class="list-sharee">{{ sharee.email }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h5>Share this list:</h5>
+            <form class="form-inline" method="POST" action="{% url 'list_share' list.id %}">
+                {% csrf_token %}
+                <input type="email" name="sharee" placeholder="your-friend@example.com">
+            </form>
+        </div>
+    </div>
+{% endblock extra_content %}
